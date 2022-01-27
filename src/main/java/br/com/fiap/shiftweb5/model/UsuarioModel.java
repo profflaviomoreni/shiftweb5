@@ -1,17 +1,40 @@
 package br.com.fiap.shiftweb5.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="SHIFT5_USUARIO")
 public class UsuarioModel {
 
+	@Id
+	@Column(name="ID_USUARIO")
+	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "USUARIO_SEQ")
+	@SequenceGenerator( name="USUARIO_SEQ", initialValue = 1, allocationSize = 1)
 	private Long idUsuario;
 	
+	@Column(name="CPF")
 	private String cpf;
 	
+	@Column(name="NOME")
 	private String nome;
 	
+	@Column(name="EMAIL")
 	private String email;
 	
+	@Column(name="SENHA")
 	private String senha;
 	
+	@Column(name="FOTO")
+	private String foto;
+	
+	
+	@Column(name="IDADE")
 	private Long idade;
 	
 
@@ -85,10 +108,20 @@ public class UsuarioModel {
 		this.idade = idade;
 	}
 
+	
+	
 	@Override
 	public String toString() {
 		return "UsuarioModel [idUsuario=" + idUsuario + ", cpf=" + cpf + ", nome=" + nome + ", email=" + email
 				+ ", senha=" + senha + ", idade=" + idade + "]";
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 	
 	

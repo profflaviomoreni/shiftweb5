@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.fiap.shiftweb5.model.UsuarioModel;
+import br.com.fiap.shiftweb5.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/usuario")
@@ -24,16 +26,12 @@ import br.com.fiap.shiftweb5.model.UsuarioModel;
 public class UsuarioController {
 
 
-	@GetMapping
-	public ResponseEntity<List<UsuarioModel>> findAll() {
-		
-		List<UsuarioModel> lista = new ArrayList<>();
-		lista.add( new UsuarioModel("191", "fmoreni1@gmail.com.br") );
-		lista.add( new UsuarioModel("192", "fmoreni2@gmail.com.br") );
-		lista.add( new UsuarioModel("193", "fmoreni3@gmail.com.br") );
-		
-		return ResponseEntity.ok(lista);
-	}
+	@Autowired
+	UsuarioRepository usuarioRepository;
+	//UsuarioRepository usuarioRepository = new UsuarioRepository();
+	
+
+	
 	
 	@GetMapping("/idade/{idade}")
 	public ResponseEntity<UsuarioModel> findByIdade(@PathVariable("idade") Long id) {
@@ -41,27 +39,46 @@ public class UsuarioController {
 	}
 	
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<UsuarioModel> findById(@PathVariable("id") Long id) {
-		
-		if ( id == 1 ) {
-			UsuarioModel usuarioModel = new UsuarioModel("191", "fmoreni1@gmail.com.br");
-			return ResponseEntity.ok(usuarioModel);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-		
-	}
+	
 	
 	@GetMapping("/{email}/{senha}")
 	public ResponseEntity<UsuarioModel> findByEmailAndSenha(
 		@PathVariable("email")	String paramEmail, 
 		@PathVariable("senha")	String paramSenha) {
 		
-		System.out.println( paramEmail + paramSenha );
+		UsuarioModel usuarioModel = 
+				usuarioRepository.findByEmailAndSenha(paramEmail, paramSenha);
 		
-		UsuarioModel usuarioModel = new UsuarioModel("191", "fmoreni1@gmail.com.br");
-		return ResponseEntity.ok(usuarioModel);
+		if ( usuarioModel == null ) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(usuarioModel);
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	@GetMapping
+	public ResponseEntity<List<UsuarioModel>> findAll() {
+		List<UsuarioModel> lista = usuarioRepository.findAll() ;
+		return ResponseEntity.ok(lista);
+	}
+	
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<UsuarioModel> findById(@PathVariable("id") Long id) {
+		
+		if ( usuarioRepository.existsById(id) ) {
+			UsuarioModel model = usuarioRepository.findById(id).get();
+			return ResponseEntity.ok(model);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 		
 	}
 	
@@ -73,6 +90,8 @@ public class UsuarioController {
 		System.out.println(usuarioModel);
 		
 		if ( usuarioModel.getIdade() != null ) {
+			
+			usuarioRepository.save(usuarioModel);
 		
 			URI location = ServletUriComponentsBuilder
 					.fromCurrentRequest()
@@ -96,29 +115,25 @@ public class UsuarioController {
 	public ResponseEntity put(@PathVariable("id") Long codigoUsuario,  
 							  @RequestBody UsuarioModel usuarioModel) {
 		
-		System.out.println(usuarioModel);
-		
-		if (codigoUsuario != 1) {
-			// Erro usuário não existe
-			return ResponseEntity.notFound().build();
-		} else if ( usuarioModel.getIdade() != null ) {
-			// Sucesso
+		if ( usuarioRepository.existsById(codigoUsuario) ) {
+			usuarioModel.setIdUsuario(codigoUsuario);
+			usuarioRepository.save(usuarioModel);
 			return ResponseEntity.ok().build();
-		} else {
-			// Erro o Json está incorreto
-			return ResponseEntity.badRequest()
-					.body("Idade não informada");
+		} else { 
+			return ResponseEntity.notFound().build();
 		}
+		
 	}
 	
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity delete(@PathVariable("id") Long id ) {
 		
-		if (id != 1) {
+		if ( usuarioRepository.existsById(id) ) {
+			usuarioRepository.deleteById(id);
+			return ResponseEntity.ok().build();
+		} else { 
 			return ResponseEntity.notFound().build();
-		} else {
-			return ResponseEntity.noContent().build();
 		}
 		
 	}
