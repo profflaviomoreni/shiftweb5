@@ -21,6 +21,10 @@ public class CategoriaModel {
 	@Column(name="NOME_CATEGORIA")
 	private String nomeCategoria;
 	
+	@Column(name="ATIVO")	
+	private Boolean ativo;
+	
+	
 	
 	public CategoriaModel() {
 		super();
@@ -50,12 +54,19 @@ public class CategoriaModel {
 		this.nomeCategoria = nomeCategoria;
 	}
 
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+	
 	@Override
 	public String toString() {
 		return "CategoriaModel [idCategoria=" + idCategoria + ", nomeCategoria=" + nomeCategoria + "]";
 	}
-	
-	
 	
 	
 }
