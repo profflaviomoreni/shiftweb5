@@ -35,7 +35,7 @@ public class CategoriaController {
 	@CrossOrigin
 	@GetMapping()
 	public ResponseEntity<List<CategoriaModel>> findAll(){
-		return ResponseEntity.ok( categoriaRepository.findAll() );
+		return ResponseEntity.ok( categoriaRepository.findByAtivo(true) );
 	}
 	
 }
