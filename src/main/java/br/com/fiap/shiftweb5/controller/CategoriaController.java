@@ -34,8 +34,8 @@ public class CategoriaController {
 	
 	@CrossOrigin
 	@GetMapping()
-	public ResponseEntity<List<CategoriaModel>> findAll(){
-		return ResponseEntity.ok( categoriaRepository.findByAtivo(true) );
+	public ResponseEntity<Long> findAll(){
+		return ResponseEntity.ok( categoriaRepository.getTotalCategorias() );
 	}
 	
 }
