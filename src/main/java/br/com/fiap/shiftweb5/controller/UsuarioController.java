@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import br.com.fiap.shiftweb5.repository.UsuarioRepository;
 @RequestMapping("/usuario")
 //http://localhost:8080/usuario
 //Request Method
+@CrossOrigin("*")
 public class UsuarioController {
 
 
@@ -86,6 +88,7 @@ public class UsuarioController {
 	
 	@SuppressWarnings("rawtypes")
 	@PostMapping
+	@CrossOrigin("*")
 	public ResponseEntity post(@RequestBody UsuarioModel usuarioModel ) {
 		System.out.println(usuarioModel);
 		

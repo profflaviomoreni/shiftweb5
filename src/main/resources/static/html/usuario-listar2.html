@@ -15,6 +15,29 @@
 
 		$(document).ready(function () {
 
+			var htmlTableTemplate = {
+				tag: 'tr',
+				children: [
+					{
+						"tag": "td",
+						"html": "${idUsuario}"
+					},
+					{
+						"tag": "td",
+						"html": "${nome}"
+					},
+					{
+						"tag": "td",
+						"html": "${email}"
+					},
+					{
+						"tag": "td",
+						"html": "${idade}"
+					}
+				]
+			};
+
+
 			var endpoint = "http://localhost:8080/usuario";
 
 			var header = {
@@ -26,15 +49,7 @@
 				.then(response => response.json())
 				.then(data => {
 
-					data.forEach(usuario => {
-						var conteudo = "<tr><td>" + usuario.idUsuario +
-							"</td><td>" + usuario.nome +
-							"</td><td>" + usuario.email +
-							"</td><td>" + usuario.idade +
-							"</td></tr>";
-
-						$("#tabelaUsuario>tbody").append(conteudo);
-					});
+					$("#tabelaUsuario>tbody").json2html(data, htmlTableTemplate);
 
 				})
 				.catch(erro => alert('Problemas no GET da API'));
