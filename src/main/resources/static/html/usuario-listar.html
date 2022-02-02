@@ -15,6 +15,12 @@
 
 		$(document).ready(function () {
 
+			listarUsuario();
+
+		});
+
+
+		function listarUsuario() {
 			var endpoint = "http://localhost:8080/usuario";
 
 			var header = {
@@ -27,21 +33,45 @@
 				.then(data => {
 
 					data.forEach(usuario => {
-						var conteudo = "<tr><td>" + usuario.idUsuario +
-							"</td><td>" + usuario.nome +
-							"</td><td>" + usuario.email +
-							"</td><td>" + usuario.idade +
-							"</td></tr>";
+						var conteudo =
+							"<tr>" +
+							"<td><a href='usuario-editar.html?idUsuario=" + usuario.idUsuario + "'>" + usuario.idUsuario + "</a></td>" +
+							"<td>" + usuario.nome + "</td>" +
+							"<td>" + usuario.email + "</td>" +
+							"<td>" + usuario.idade + "</td>" +
+							"<td><a href='javascript:excluirUsuario(" + usuario.idUsuario + ");' >Excluir</a></td>" +
+							"</tr>";
 
 						$("#tabelaUsuario>tbody").append(conteudo);
 					});
 
 				})
 				.catch(erro => alert('Problemas no GET da API'));
+		}
 
-		});
 
+		function excluirUsuario(id) {
 
+			var endpoint = "http://localhost:8080/usuario/" + id;
+
+			var header = {
+				method: 'DELETE',
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8'
+				}
+			};
+
+			fetch(endpoint, header)
+				.then(function (response) {
+					if (response.ok) {
+						$("#tabelaUsuario>tbody").empty();
+						listarUsuario();
+					} else {
+						alert('Não foi possível remover o usuário')
+					}
+				});
+
+		}
 
 
 	</script>
@@ -60,6 +90,8 @@
 		<main role="main" class="pb-3">
 			<div class="col-md-12">
 				<h1>Usuários</h1>
+				<a href="usuario-novo.html" class="btn btn-primary btn-lg">Novo</a>
+
 				<table id="tabelaUsuario" class="table table-striped" border="1" cellspacing="0" cellpadding="0">
 					<thead>
 						<tr>
@@ -67,6 +99,7 @@
 							<th data-field="nome">Nome</th>
 							<th data-field="email">Email</th>
 							<th data-field="idade">Idade</th>
+							<th data-field="acao">Ação</th>
 						</tr>
 					</thead>
 					<tbody>
