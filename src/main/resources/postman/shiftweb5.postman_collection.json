@@ -59,7 +59,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/usuario/fmoreni@gmail.com/valorDaSenha123456",
+					"raw": "http://localhost:8080/usuario/flavio.moreni@fiap.com.br/123456",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -67,8 +67,8 @@
 					"port": "8080",
 					"path": [
 						"usuario",
-						"fmoreni@gmail.com",
-						"valorDaSenha123456"
+						"flavio.moreni@fiap.com.br",
+						"123456"
 					]
 				}
 			},
@@ -146,6 +146,178 @@
 					"path": [
 						"usuario",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categoria - Get By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/categoria/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"categoria",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produto - GET By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/produto/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produto - GetAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/produto/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produto - Get By Marcas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/produto/marcas?idMarca=1,4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						"marcas"
+					],
+					"query": [
+						{
+							"key": "idMarca",
+							"value": "1,4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produto - Get By Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/produto/nome?nome=produto 6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						"nome"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "produto 6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produto - Order By Data Lancamento",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/produto/novos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						"novos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produto - Get By Preco Desc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/produto/precoDesc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						"precoDesc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produto - Get By Preco Asc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/produto/precoDesc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						"precoDesc"
 					]
 				}
 			},
