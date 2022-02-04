@@ -1,6 +1,7 @@
 package br.com.fiap.shiftweb5.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -55,6 +58,12 @@ public class ProdutoModel {
 	@JoinColumn(name="ID_MARCA", nullable = false)
 	private MarcaModel marcaModel;
 	
+	
+	@ManyToMany
+	@JoinTable( name = "SHIFT5_PRODUTO_LOJA" , 
+		joinColumns = @JoinColumn( name = "ID_PRODUTO" , referencedColumnName = "ID_PRODUTO")  ,
+		inverseJoinColumns = @JoinColumn ( name = "ID_LOJA", referencedColumnName = "ID_LOJA") )
+	private List<LojaModel> lojas;
 	
 	
 	public Long getIdProduto() {
@@ -136,5 +145,15 @@ public class ProdutoModel {
 	public void setMarcaModel(MarcaModel marcaModel) {
 		this.marcaModel = marcaModel;
 	}
+
+	public List<LojaModel> getLojas() {
+		return lojas;
+	}
+
+	public void setLojas(List<LojaModel> lojas) {
+		this.lojas = lojas;
+	}
+	
+	
 	
 }

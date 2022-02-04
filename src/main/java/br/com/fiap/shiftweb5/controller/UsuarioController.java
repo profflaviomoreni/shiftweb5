@@ -1,11 +1,13 @@
 package br.com.fiap.shiftweb5.controller;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,17 +24,12 @@ import br.com.fiap.shiftweb5.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/usuario")
-//http://localhost:8080/usuario
-//Request Method
 @CrossOrigin("*")
 public class UsuarioController {
 
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
-	//UsuarioRepository usuarioRepository = new UsuarioRepository();
-	
-
 	
 	
 	@GetMapping("/idade/{idade}")
@@ -89,8 +86,9 @@ public class UsuarioController {
 	@SuppressWarnings("rawtypes")
 	@PostMapping
 	@CrossOrigin("*")
-	public ResponseEntity post(@RequestBody UsuarioModel usuarioModel ) {
-		System.out.println(usuarioModel);
+	public ResponseEntity post(@Valid @RequestBody UsuarioModel usuarioModel, BindingResult bindingResult  ) {
+
+		System.out.println( bindingResult.hasErrors() );
 		
 		if ( usuarioModel.getIdade() != null ) {
 			
